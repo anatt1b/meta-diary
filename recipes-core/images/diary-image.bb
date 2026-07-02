@@ -13,3 +13,4 @@ inherit core-image
 
 IMAGE_ROOTFS_EXTRA_SPACE = "65536"
 IMAGE_INSTALL:append = " sl"
+IMAGE_INSTALL:append = " diary-config"
