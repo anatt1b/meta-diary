@@ -1,0 +1,23 @@
+From de0054c35cf99c0da144e371b9bbe28e01c538ed Mon Sep 17 00:00:00 2001
+From: anatt1b <antti.buller@gmail.com>
+Date: Wed, 8 Jul 2026 15:03:13 +0000
+Subject: [PATCH] add build marker to bb_banner
+Upstream-Status: Inappropriate [local diary build marker]
+
+---
+ libbb/messages.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libbb/messages.c b/libbb/messages.c
+index 6914d57..d001a2c 100644
+--- a/libbb/messages.c
++++ b/libbb/messages.c
+@@ -11,7 +11,7 @@
+ #define BB_EXTRA_VERSION " ("AUTOCONF_TIMESTAMP")"
+ #endif
+ 
+-const char bb_banner[] ALIGN1 = "BusyBox v" BB_VER BB_EXTRA_VERSION;
++const char bb_banner[] ALIGN1 = "BusyBox v" BB_VER BB_EXTRA_VERSION " (diary build)";
+ 
+ 
+ const char bb_msg_memory_exhausted[] ALIGN1 = "out of memory";
