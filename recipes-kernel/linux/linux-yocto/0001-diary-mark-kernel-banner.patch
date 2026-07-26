@@ -1,0 +1,23 @@
+From bdff569f4c2e6735d2a3de5dd998a5a82bb927d5 Mon Sep 17 00:00:00 2001
+From: anatt1b <antti.buller@gmail.com>
+Date: Sun, 26 Jul 2026 08:16:56 +0000
+Subject: [PATCH] diary: mark kernel banner
+Upstream-Status: Inappropriate [diary demo patch]
+
+---
+ init/version.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/init/version.c b/init/version.c
+index f117921811b4..b27037e3d328 100644
+--- a/init/version.c
++++ b/init/version.c
+@@ -35,7 +35,7 @@ early_param("hostname", early_hostname);
+ const char linux_proc_banner[] =
+ 	"%s version %s"
+ 	" (" LINUX_COMPILE_BY "@" LINUX_COMPILE_HOST ")"
+-	" (" LINUX_COMPILER ") %s\n";
++	" (" LINUX_COMPILER ") %s diary-build\n";
+ 
+ BUILD_SALT;
+ BUILD_LTO_INFO;
