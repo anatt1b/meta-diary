@@ -3,9 +3,14 @@
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
 #include <linux/device.h>
+#include <linux/moduleparam.h>
 
 #define DEVNAME "diary0"
 #define BUFSZ   256
+
+static int verbose = 0;
+module_param(verbose, int, 0644);
+MODULE_PARM_DESC(verbose, "log every read/write when non-zero");
 
 static dev_t         devno;
 static struct cdev   cdev;
@@ -16,6 +21,7 @@ static size_t        len;
 static ssize_t diary_read(struct file *f, char __user *ubuf,
                           size_t count, loff_t *off)
 {
+    if (verbose) pr_info("diary_char: read %zu bytes\n", count);
     size_t n = min(count, len);
     if (*off >= len) return 0;
     if (copy_to_user(ubuf, buf + *off, n)) return -EFAULT;
@@ -29,7 +35,7 @@ static ssize_t diary_write(struct file *f, const char __user *ubuf,
     size_t n = min(count, (size_t)BUFSZ);
     if (copy_from_user(buf, ubuf, n)) return -EFAULT;
     len = n;
-    pr_info("diary: wrote %zu bytes\n", n);
+    if (verbose) pr_info("diary: wrote %zu bytes\n", n);
     return n;
 }
 
