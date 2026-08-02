@@ -22,3 +22,4 @@ EXTRA_USERS_PARAMS = "\
     useradd -p '\$6\$/Nlf64Q5m36bbhJK\$vM1m4c0adwwR1/OMC6Vly6O7p91XeEZCOecfs5.90SCG0fOIJ.vinV7pfu2IxIkFKh0QHLEjlBWfvQV73AWyz.' student; \
     usermod -a -G sudo student; \
     "
+IMAGE_INSTALL += "diary-char"
