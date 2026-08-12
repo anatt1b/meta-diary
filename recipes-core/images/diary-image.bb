@@ -11,6 +11,7 @@ IMAGE_INSTALL = " \
     sl \
     diary-config \
     sudo \
+    systemd-analyze \
     "
 
 inherit core-image
