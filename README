@@ -1,41 +1,97 @@
-This README file contains information on the contents of the meta-diary layer.
+meta-diary is a custom Yocto layer created as coursework 
+embedded Linux / Yocto Project course. It customizes a minimal Linux
+image for QEMU targets: adding a diary-branded image, configuration and
+services, a custom character-device kernel module, kernel hardening
+fragments, and a set of BSP and BusyBox customizations.
 
-Please see the corresponding sections below for details.
+Primary target machine:  qemux86-64  (qemuarm64 also used)
+Yocto release:           scarthgap
+License:                 MIT (see COPYING.MIT)
+
 
 Dependencies
 ============
 
-  URI: <first dependency>
-  branch: <branch name>
+  URI:    git://git.yoctoproject.org/poky
+  layers: meta, meta-poky
+  branch: scarthgap
 
-  URI: <second dependency>
-  branch: <branch name>
-
-  .
-  .
-  .
-
-Patches
-=======
-
-Please submit any patches against the meta-diary layer to the xxxx mailing list (xxxx@zzzz.org)
-and cc: the maintainer:
-
-Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
 
 Table of Contents
 =================
 
-  I. Adding the meta-diary layer to your build
- II. Misc
+  I.   Adding the meta-diary layer to your build
+  II.  Layer contents
+  III. Building the diary image
+  IV.  Misc
 
 
 I. Adding the meta-diary layer to your build
-=================================================
+============================================
 
-Run 'bitbake-layers add-layer meta-diary'
+Clone the layer next to your poky checkout, source the build
+environment, then add the layer:
 
-II. Misc
+  bitbake-layers add-layer /path/to/meta-diary
+
+This registers meta-diary in conf/bblayers.conf.
+
+
+II. Layer contents
+==================
+
+conf/
+    Layer configuration (layer.conf): collection name, priority,
+    and scarthgap compatibility.
+
+recipes-core/
+    images/diary-image.bb
+                     The main image recipe. A minimal systemd-based
+                     image with the diary customizations installed.
+    base-files       bbappend that resolves a motd file conflict.
+    busybox          bbappend adding a build marker to the BusyBox
+                     banner via a devtool-generated patch.
+
+recipes-diary/
+    diary-config     Branding and services: motd, a diary-version
+                     file, and a heartbeat systemd service.
+    diary-httpd      A small HTTP service packaged as a systemd unit.
+    diary-char       A custom character-device kernel module, built
+                     as an out-of-tree module and autoloaded at boot.
+                     Exposes a 'verbose' module parameter.
+
+recipes-kernel/
+    linux-yocto bbappend with kernel configuration fragments for
+    the diary device, security hardening, 9p and Hyper-V support.
+
+recipes-bsp/
+    u-boot           bbappend with bootloader customizations.
+
+recipes-fun/
+    sl               The classic 'sl' steam-locomotive joke program,
+                     built from its git source, as a packaging exercise.
+
+recipes-example/
+    example          A minimal example recipe used for learning the
+                     recipe format.
+
+
+III. Building the diary image
+=============================
+
+With the build environment sourced and meta-diary added to your
+build, run:
+
+  bitbake diary-image
+
+The resulting image can be booted under QEMU with:
+
+  runqemu qemux86-64
+
+
+IV. Misc
 ========
 
---- replace with specific information about the meta-diary layer ---
+This layer is coursework and is not intended for production use.
+Host-specific build configuration (local.conf) is not included in
+this repository; only the layer itself is versioned here.
