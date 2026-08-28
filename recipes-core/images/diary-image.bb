@@ -2,6 +2,7 @@ SUMMARY = "Custom image for the custom-linux course diary"
 LICENSE = "MIT"
 
 IMAGE_FEATURES += "ssh-server-openssh package-management"
+IMAGE_FEATURES += "read-only-rootfs"
 
 IMAGE_INSTALL = " \
     packagegroup-core-boot \
@@ -24,3 +25,4 @@ EXTRA_USERS_PARAMS = "\
     usermod -a -G sudo student; \
     "
 IMAGE_INSTALL += "diary-char diary-httpd"
+IMAGE_INSTALL:append = " etc-overlay"

@@ -26,15 +26,16 @@ do_install() {
 
     install -d ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/heartbeat.service ${D}${systemd_system_unitdir}/heartbeat.service
+
+    install -d -m 0750 ${D}${sysconfdir}/sudoers.d
+    echo '%sudo ALL=(ALL:ALL) ALL' > ${D}${sysconfdir}/sudoers.d/sudo-group
+    chmod 0440 ${D}${sysconfdir}/sudoers.d/sudo-group
 }
 
-pkg_postinst_ontarget:${PN}() {
-    echo '%sudo ALL=(ALL:ALL) ALL' > ${sysconfdir}/sudoers.d/sudo-group
-    chmod 0440 ${sysconfdir}/sudoers.d/sudo-group
-}
 
 CONFFILES:${PN} = "${sysconfdir}/motd"
 FILES:${PN} = "${sysconfdir}/motd \
                ${sysconfdir}/diary-version \
                ${bindir}/heartbeat.sh \
-               ${systemd_system_unitdir}/heartbeat.service"
+               ${systemd_system_unitdir}/heartbeat.service \
+	       ${sysconfdir}/sudoers.d/sudo-group"

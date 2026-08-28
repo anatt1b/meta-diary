@@ -1,0 +1,13 @@
+[Unit]
+Description=Writable tmpfs overlay on /etc (stateless demo)
+After=local-fs.target
+Before=multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=/bin/mkdir -p /run/etc-overlay/upper /run/etc-overlay/work
+ExecStart=/bin/mount -t overlay overlay -o lowerdir=/etc,upperdir=/run/etc-overlay/upper,workdir=/run/etc-overlay/work /etc
+
+[Install]
+WantedBy=multi-user.target
